@@ -7,9 +7,23 @@ format: html
 ## Header 1
 
 ```{r setup}
-#| include: false
+library(tidyverse)
+library(here)
+library(snakecase)
 ```
 
+## Importing new data
+
 ```{r}
-# Code chunk
+here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") %>% # den her pipe hører til tidverse, |> hører til basic R
+  read_csv(
+    show_col_types = FALSE, # sletter kodens gæt på hvad kolonnerne indeholder
+    name_repair = to_snake_case, # ændrer kolummens navn til små bogstaver, nemmere at læse
+    n_max = 100 # importerer 100 rækker, teste kode på mindre data
+  )
 ```
+
+Der er read.csv og read_csv (_ hører til tidyverse). Man sætter here på at lokalisere projektet for at sikre at det bliver indenfor mappe-strukturen
+
+Ved tvivl om funktionerne, kan man i consollen skrive f.eks. ?read_csv og kør. 
+Det er en god ide at hente mindre dele af data, test koden og derefter hente hele datasættet. 
