@@ -9,12 +9,13 @@ format: html
 ```{r setup}
 library(tidyverse)
 library(here)
-library(snakecase)
+source(here("R/functions.R"))
 ```
 
 ## Importing new data
 
 ```{r}
+#| eval: false
 here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") %>% # den her pipe hører til tidverse, |> hører til basic R
   read_csv(
     show_col_types = FALSE, # sletter kodens gæt på hvad kolonnerne indeholder
@@ -30,6 +31,7 @@ Det er en god ide at hente mindre dele af data, test koden og derefter hente hel
 
 ## Exercise: Reading other files 
 ```{r}
+#| eval: false
 here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
   read_csv(
     show_col_types = FALSE,
@@ -39,6 +41,7 @@ here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
 ```
 
 ```{r}
+#| eval: false
 here("data-raw/nurses-stress/stress/6B/6B_1587569373/EDA.csv.gz") |>
   read_csv(
     show_col_types = FALSE,
@@ -64,24 +67,7 @@ add_numbers <- function(num1, num2) {
 
 For at dokumentere funktion: hold musen i funktion, i paletten søg roxy (insert a roxygen). Export og examples er mest relevant ift at lave pakker. 
 
-```{r}
-#' Read in one nurses' stress data file
-#'
-#' @param a path to a data file
-#' @param maximum number of rows to read
-#'
-#' @returns outputs a dataframe / tibble
 
-read <- function(file.path, max_rows = 100) {
-  data <- file.path |>
-    readr::read_csv( #readr lokaliserer hvilken pakke der anvendes 
-      show_col_types = FALSE,
-      name_repair = to_snake_case,
-      n_max = max_rows
-    )
-  return(data)
-}
-```
 Man skal ikke navngive sine funktioner det samme som eksisterende funktioner. Tjek i consollen ?"funktion" 
 
 ```{r}
@@ -111,3 +97,5 @@ here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
 For at se hvilke libraries brug pak::pak For at importere library til description file:  usethis::use_package("here")
 
 library / require inde i en funktion, hvilket kan give bøvl, fordi man loader noget inde i funktion og dermed ind i det generelle enviroment. 
+
+ctrl + . åbner søge-felt
