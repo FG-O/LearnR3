@@ -27,3 +27,22 @@ Der er read.csv og read_csv (_ hører til tidyverse). Man sætter here på at lo
 
 Ved tvivl om funktionerne, kan man i consollen skrive f.eks. ?read_csv og kør. 
 Det er en god ide at hente mindre dele af data, test koden og derefter hente hele datasættet. 
+
+## Exercise: Reading other files 
+```{r}
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read_csv(
+    show_col_types = FALSE,
+    name_repair = to_snake_case,
+    n_max = 100
+  )
+```
+
+```{r}
+here("data-raw/nurses-stress/stress/6B/6B_1587569373/EDA.csv.gz") |>
+  read_csv(
+    show_col_types = FALSE,
+    name_repair = to_snake_case,
+    n_max = 100
+  )
+```
