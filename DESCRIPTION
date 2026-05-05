@@ -8,6 +8,7 @@ BugReports: https://github.com/FG-O/LearnR3/issues
 Imports: 
     base,
     here,
-    readr
+    readr,
+    snakecase
 Depends: 
     tidyverse
