@@ -64,3 +64,31 @@ add_numbers <- function(num1, num2) {
 
 For at dokumentere funktion: hold musen i funktion, i paletten søg roxy (insert a roxygen). Export og examples er mest relevant ift at lave pakker. 
 
+```{r}
+#' Read in one nurses' stress data file
+#'
+#' @param a path to a data file
+#'
+#' @returns outputs a dataframe / tibble
+
+read <- function(file.path) {
+  data <- file.path |>
+    read_csv(
+      show_col_types = FALSE,
+      name_repair = to_snake_case,
+      n_max = 100
+    )
+  return(data)
+}
+```
+Man skal ikke navngive sine funktioner det samme som eksisterende funktioner. Tjek i consollen ?"funktion" 
+
+```{r}
+here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") %>%
+  read()
+```
+
+```{r}
+here("data-raw/nurses-stress/stress/5C/5c_1586886712/HR.csv.gz") %>%
+  read()
+```
