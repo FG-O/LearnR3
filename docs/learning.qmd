@@ -68,13 +68,13 @@ For at dokumentere funktion: hold musen i funktion, i paletten søg roxy (insert
 #' Read in one nurses' stress data file
 #'
 #' @param a path to a data file
-#' @param max_rows = 100
+#' @param maximum number of rows to read
 #'
 #' @returns outputs a dataframe / tibble
 
 read <- function(file.path, max_rows = 100) {
   data <- file.path |>
-    read_csv(
+    readr::read_csv( #readr lokaliserer hvilken pakke der anvendes 
       show_col_types = FALSE,
       name_repair = to_snake_case,
       n_max = max_rows
@@ -107,3 +107,7 @@ here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
 here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
   read(max_rows = Inf)
 ```
+## Making robust and reusable funtions
+For at se hvilke libraries brug pak::pak For at importere library til description file:  usethis::use_package("here")
+
+library / require inde i en funktion, hvilket kan give bøvl, fordi man loader noget inde i funktion og dermed ind i det generelle enviroment. 
