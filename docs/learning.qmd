@@ -46,3 +46,21 @@ here("data-raw/nurses-stress/stress/6B/6B_1587569373/EDA.csv.gz") |>
     n_max = 100
   )
 ```
+
+## Making a function to add numbers 
+```{r}
+#' Add to numbers together
+#'
+#' @param num1 A number here
+#' @param num2 a number here
+#'
+#' @returns the sum of two numbers
+#'
+add_numbers <- function(num1, num2) {
+  added <- num1 + num2
+  return(added)
+}
+```
+
+For at dokumentere funktion: hold musen i funktion, i paletten søg roxy (insert a roxygen). Export og examples er mest relevant ift at lave pakker. 
+
