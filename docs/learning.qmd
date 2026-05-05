@@ -68,15 +68,16 @@ For at dokumentere funktion: hold musen i funktion, i paletten søg roxy (insert
 #' Read in one nurses' stress data file
 #'
 #' @param a path to a data file
+#' @param max_rows = 100
 #'
 #' @returns outputs a dataframe / tibble
 
-read <- function(file.path) {
+read <- function(file.path, max_rows = 100) {
   data <- file.path |>
     read_csv(
       show_col_types = FALSE,
       name_repair = to_snake_case,
-      n_max = 100
+      n_max = max_rows
     )
   return(data)
 }
@@ -91,4 +92,18 @@ here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") %>%
 ```{r}
 here("data-raw/nurses-stress/stress/5C/5c_1586886712/HR.csv.gz") %>%
   read()
+```
+
+```{r}
+# Outputs only 100 rows
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read()
+
+# Outputs only 1000 rows
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read(max_rows = 1000)
+
+# Outputs all rows (`Inf` means infinity)
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read(max_rows = Inf)
 ```
