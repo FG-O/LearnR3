@@ -227,3 +227,8 @@ hr_data %>%
     .by = c(id, collection_datetime)
   )
 ``` 
+
+## 20.6 Exercise: onvert the summarising code into a funtion 
+```{r}
+
+```

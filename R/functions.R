@@ -54,3 +54,28 @@ get_participant_id <- function(data) {
     dplyr::select(-file_path_id)
   return(data)
 }
+
+#' Summarise by datetime and add mean, median and SD of numeric values
+#'
+#' @param data
+#'
+#' @returns a dateframe
+
+summarise_by_datetime <- function(data) {
+  summarised_data <- data |>
+    dplyr::mutate(
+      collection_datetime = lubridate::round_date(
+        collection_datetime,
+        unit = "minute"
+      )
+    ) %>%
+    dplyr::summarise(
+      dplyr::across(
+        tidyselect::where(is.numeric),
+        list(mean = mean, sd = sd, median = median)
+      ),
+      .by = c(id, collection_datetime)
+    )
+
+  return(summarised_data)
+}
