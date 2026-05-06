@@ -117,3 +117,61 @@ hr_data
 
 # For at se en bestemt fil, kan man skrive hr_data[[filnummer]]
 ```
+
+## Exercise 18.5 - convert map to function and use on sleep  
+```{r}
+#| eval: false
+#' Read in all files in nurses stress
+#'
+#' @param filename
+#'
+#' @returns outputs a dataframe
+
+read_all <- function(filename, max_rows = 100) {
+  files <- here::here("data-raw/nurses-stress/") %>%
+    fs::dir_ls(regexp = filename, recurse = TRUE)
+
+  data <- files %>%
+    purrr::map(read) %>%
+    purrr::list_rbind(names_to = "file_path_id") %>%
+    n_max() <- max_rows
+
+  return(data)
+}
+
+read_all("HR.csv.gz")
+read_all("IBI.csv.gz")
+```
+
+## Exercise: inspecting the data and compare the data frames 
+```{r}
+hr_data <- read_all("HR.csv.gz")
+
+survey_data <- here::here("data-raw/nurses-stress/survey-results.csv.gz") %>%
+  read()
+
+hr_data
+survey_data
+```
+
+## Extract ID from file_path 
+
+```{r}
+hr_data %>%
+  mutate( # laver en ny kolonne, bedre end at ændre
+    id = str_extract(
+      file_path_id,
+      pattern = "/stress/[:alnum:]{2}/" # inkluderer stress for at gøre koden mere robust i tilfælde af file path ændrer sig
+    ) %>%
+      str_remove("/stress/") %>%
+      str_remove("/"),
+    .before = file_path_id # vælger hvor man vil placere sin nye kolonne
+  ) %>%
+  select(-file_path_id) #- for at fjerne en kolonne
+```
+
+## 19.7 Exercise: Convert 'getID' code into a function 
+```{r}
+hr_data %>%
+  get_participant_id()
+```
