@@ -9,6 +9,7 @@ format: html
 ```{r setup}
 library(tidyverse)
 library(here)
+library(fs)
 source(here("R/functions.R"))
 ```
 
@@ -98,4 +99,21 @@ For at se hvilke libraries brug pak::pak For at importere library til descriptio
 
 library / require inde i en funktion, hvilket kan give bøvl, fordi man loader noget inde i funktion og dermed ind i det generelle enviroment. 
 
-ctrl + . åbner søge-felt
+ctrl + . åbner fil søge-felt
+
+## Using map
+```{r}
+hr_files <- here("data-raw/nurses-stress/") %>%
+  dir_ls(regexp = "HR.csv.gz", recurse = TRUE) # dir_ls looks within this folder, show all files. recurse checks subfolders
+
+hr_files
+
+hr_data <- # alt + -
+  hr_files %>%
+  map(read) %>% # No brackets, beskriver hvad vi har inde i funktionen. med brackets udfører funktionen aktionen
+  list_rbind(names_to = "file_path_id") # man kan rowbinde eller column bind datalister, i dette tilfælder er kolonnerne ens, og vi kan derfor row-bind -> giver en dataframe (tibble)
+
+hr_data
+
+# For at se en bestemt fil, kan man skrive hr_data[[filnummer]]
+```
