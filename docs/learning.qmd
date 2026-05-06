@@ -175,3 +175,55 @@ hr_data %>%
 hr_data %>%
   get_participant_id()
 ```
+
+across er bedre til i datasæt, mens map er bedre til overordnet datasæt 
+
+## Wokring with across 
+
+```{r}
+hr_data <- read_all("HR.csv.gz") %>%
+  get_participant_id()
+
+hr_data
+```
+
+```{r}
+hr_data %>%
+  summarise(across(where(is.numeric), list(
+    mean = mean,
+    median = median,
+    sd = sd
+  )))
+```
+Man kan ikke beregne mean hvis der er NA values. Anonymisered funktioner kan bruges til midlertidige funktioner, de tilføjer et ekstra argument. Hvis man vil beregne mean uanst NA-stautis across(mean = mean, \(x) mean(x, na.rm = TRUE) 
+
+## Working with dates (med pakken lubridate)
+
+```{r}
+hr_data %>%
+  mutate(
+    datetime = round_date(collection_datetime,
+      unit = "minute"
+    ),
+    .before = "collection_datetime"
+  )
+```
+
+## Summarising by groups 
+
+```{r}
+hr_data %>%
+  mutate(
+    collection_datetime = round_date(
+      collection_datetime,
+      unit = "minute"
+    )
+  ) %>%
+  summarise(
+    across(
+      where(is.numeric),
+      list(mean = mean, sd = sd, median = median)
+    ),
+    .by = c(id, collection_datetime)
+  )
+``` 
