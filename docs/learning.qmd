@@ -269,5 +269,48 @@ survey_tidy |>
 ```
 
 ```{r}
+survey_tidy <- here::here("data-raw/nurses-stress/survey-results.csv.gz") |> 
+  read() |> 
+  tidy_survey_dates()
+
+survey_long <- survey_tidy |> 
+  survey_to_long()
+
 ```
+
+## Joining datasets 
+
+```{r}
+survey_long |> 
+  left_join(survey_tidy) #vælger selv hvilke overlappende kolonner den joiner på 
+
+#hvis man ser warning many-to-many skal man kigge i sine data, for at finde årsagen til 
+
+survey_tidy |> 
+  count(id, datetime_id) |> 
+  filter(n > 1) #for at finde duplikater
+
+survey_long |> 
+  right_join(survey_tidy)
+
+survey_long |> 
+  full_join(survey_tidy)
+
+
+```
+
+```{r}
+nurses_stress <- survey_long |> 
+  full_join(survey_tidy) |> 
+  full_join(hr_data)
+
+nurses_stress |> 
+  arrange(id, collection_datetime) |> 
+  View() #åbner datasættet
+
+nurses_stress
+```
+
+## Exercise: Join the rest of the data 
+
 

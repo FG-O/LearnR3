@@ -8,7 +8,7 @@ format: html
 
 ```{r setup}
 #| include: false
-library(tidyverse)  
+library(tidyverse)
 source(here::here("R/functions.R"))
 ```
 
@@ -51,8 +51,21 @@ eda_data <- read_all("EDA.csv.gz") %>%
 
 ## Process survey data 
 ```{r}
-survey_tidy <- here::here("data-raw/nurses-stress/survey-results.csv.gz") |> 
-  read() |> 
+survey_tidy <- here::here("data-raw/nurses-stress/survey-results.csv.gz") |>
+  read() |>
   tidy_survey_dates()
+
+survey_long <- survey_tidy |>
+  survey_to_long()
 ```
 
+## Joining datasets 
+```{r}
+nurses_stress <- survey_long |>
+  full_join(survey_tidy) |>
+  full_join(hr_data) |>
+  full_join(ibi_data) |>
+  full_join(temp_data) |>
+  full_join(bvp_data) |>
+  full_join(eda_data)
+```
