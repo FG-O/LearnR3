@@ -5,7 +5,7 @@
 #'
 #' @returns outputs a dataframe / tibble
 
-read <- function(file.path, max_rows = 100) {
+read <- function(file.path, max_rows = Inf) {
   data <- file.path |>
     readr::read_csv( # readr lokaliserer hvilken pakke der anvendes
       show_col_types = FALSE,

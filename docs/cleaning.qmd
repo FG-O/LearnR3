@@ -68,4 +68,6 @@ nurses_stress <- survey_long |>
   full_join(temp_data) |>
   full_join(bvp_data) |>
   full_join(eda_data)
+
+write_csv(nurses_stress, here::here("data/nurses-stress.csv"))
 ```
