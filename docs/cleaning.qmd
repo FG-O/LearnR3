@@ -8,7 +8,7 @@ format: html
 
 ```{r setup}
 #| include: false
-library(tidyverse) |> 
+library(tidyverse)  
 source(here::here("R/functions.R"))
 ```
 
@@ -48,3 +48,11 @@ eda_data <- read_all("EDA.csv.gz") %>%
   get_participant_id() %>%
   summarise_by_datetime()
 ```
+
+## Process survey data 
+```{r}
+survey_tidy <- here::here("data-raw/nurses-stress/survey-results.csv.gz") |> 
+  read() |> 
+  tidy_survey_dates()
+```
+
